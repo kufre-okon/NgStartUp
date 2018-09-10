@@ -1,0 +1,31 @@
+
+  <div class="m-content">
+  
+    <mat-card>
+      <mat-card-content>
+        <h2>Basic Use Case</h2>
+  
+        <mat-drawer-container class="demo-drawer-container">
+          <mat-drawer #filterdrawer mode="over">
+            <mat-nav-list>
+              <a mat-list-item routerLink>Link</a>
+              <a mat-list-item routerLink cdkFocusRegionStart>Focus region start</a>
+              <a mat-list-item routerLink>Link</a>
+              <a mat-list-item routerLink cdkFocusInitial>Initially focused</a>
+              <a mat-list-item routerLink cdkFocusRegionEnd>Focus region end</a>
+              <a mat-list-item routerLink>Link</a>
+            </mat-nav-list>
+          </mat-drawer>
+  
+          <div class="demo-drawer-content" style="min-height: 250px">
+            <h2>User List</h2>
+  hsfghg ffjjsl sgjfs gldfsgjo dfsug osgudo gufod ugosfdug oidug doifgdsiog oidig oiug odfsufgo duhg ougdfso ghfodsguidi giudfuhg idfuhgidiugh ougofsgofsugh odsfughod
+            <div>
+              <header>Drawer</header>
+              <button mat-button (click)="filterdrawer.toggle()">Toggle Drawer</button>
+            </div>
+          </div>
+        </mat-drawer-container>
+      </mat-card-content>
+    </mat-card>
+  </div>

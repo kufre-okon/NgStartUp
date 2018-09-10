@@ -1,0 +1,38 @@
+<div class="t-pager" [hidden]="hideIfEmpty && total<1">
+  <div class="t-pager-menus">
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showFirstLast" [title]="textTitleFirst" [attr.aria-disabled]="page - 1 <= 0"
+      (click)="gotoFirst()">{{ textFirst }}</a>
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showPrevNext" [title]="textTitlePrev" [attr.aria-disabled]="page - 1 <= 0"
+      (click)="gotoPrev(page-1)">{{textPrev}}</a>
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showMorePrevNext" title="More Pages" [attr.aria-disabled]="!(index - 1 >= 0)"
+      (click)="gotoMorePrev()">&#8230;</a>
+    <ng-container *ngIf="isMobile">
+      <!-- one-way data binding -->
+      <input type="number" min="1" [max]="pagesCount" [ngModel]="page" (keyup.enter)="setMobilePage(inpu.value)" #inpu title="Go to page"
+        class="t-pager-input">
+    </ng-container>
+    <ng-container *ngIf="!isMobile">
+      <ng-container *ngFor="let i of stepInfo">
+        <!-- pages array is zero based -->
+        <a class="t-pager-link" [title]="getLinkTitle(index + i+1)" (click)="goto(index + i)" *ngIf="pages[index + i]" [ngClass]="{'active': pages[index + i] ==page}">
+          {{ pages[index + i] }}
+        </a>
+      </ng-container>
+    </ng-container>
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showMorePrevNext" title="More Pages" [attr.aria-disabled]="!(index +steps < pagesCount)"
+      (click)="gotoMoreNext()">&#8230;</a>
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showPrevNext" [title]="textTitleNext" [attr.aria-disabled]="page>=pagesCount"
+      (click)="gotoNext(page)">{{textNext}}</a>
+    <a class="t-pager-link t-pager-link--nav" *ngIf="showFirstLast" [title]="textTitleLast" [attr.aria-disabled]="page>=pagesCount"
+      (click)="gotoLast()">{{ textLast }}</a>
+  </div>
+  <div class="t-pager-info">
+    <div class="t-pager-size-wrapper">
+      <select class="t-pager-size" (ngModelChange)="pageSizeChange($event)" [(ngModel)]="pageSize">
+        <option *ngFor="let c of pageSizeOptions" value="{{c}}">{{c}}</option>
+      </select>
+    </div>
+    <span>Showing {{itemStart}}-{{itemEnd}} of {{total}} items</span>
+  </div>
+  <div style="clear:both;float:none"></div>
+</div>

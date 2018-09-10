@@ -1,0 +1,117 @@
+  .t-pager {
+      width: 100%;
+      padding: 10px 10px;
+      text-align: center;
+      color: #575962;
+  }
+
+  .t-pager-menus {
+      margin: 10px 0 0 0;
+      padding: 0;
+      display: flex;
+      float: left;
+  }
+
+  .t-pager-link {
+      color: #898b96;
+      margin-right: 5px;
+  }
+
+  .t-pager-link {
+      height: 2.25rem;
+      min-width: 2.25rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+      position: relative;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -moz-justify-content: center;
+      -ms-justify-content: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -moz-align-items: center;
+      -ms-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 1rem;
+      line-height: 1rem;
+      font-weight: 400;
+      background: #fff;
+  }
+
+  .t-pager-link:not(.active):not([disabled]):not([aria-disabled="true"]) {
+      cursor: pointer;
+  }
+
+  .t-pager-link[disabled],
+  .t-pager-link[aria-disabled="true"] {
+      color: #898b96;
+      background: #ebe9f2;
+      opacity: .3;
+      filter: alpha(opacity=30);
+  }
+
+  .t-pager-link--nav {
+      background: #ebe9f2;
+  }
+
+  .t-pager-link:not([disabled]):not([aria-disabled="true"]):hover,
+  .t-pager-link.active {
+      background: #716aca !important;
+      color: #fff !important;
+  }
+
+  .t-pager-size-wrapper {
+      margin-right: 10px;
+  }
+
+  .t-pager-size-wrapper .t-pager-size {
+      color: #788590;
+      border: 1px solid #ccc;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+      height: 30px;
+      padding: 5px 10px;
+      font-size: 12px;
+      border-radius: 3px;
+      width: 67px;
+      outline: 0;
+  }
+
+  .t-pager-size-wrapper .t-pager-size:focus {
+      outline: 0;
+  }
+
+  .t-pager-input {
+      height: 2.25rem;
+      width: 3.5rem;
+      text-align: center;
+      border-radius: 15px !important;
+      background: #ebe9f2;
+      border-color: #ebe9f2;
+      border: 1px solid #ced4da;
+      margin-right: 5px;
+  }
+
+  .t-pager-input:focus {
+      background: #716aca;
+      border-color: #716aca;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      outline: 0;
+  }
+
+  .t-pager-info {
+      float: right;
+      margin-top: 10px;
+      display: flex;
+      align-items: center
+  }
