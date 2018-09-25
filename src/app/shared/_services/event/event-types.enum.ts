@@ -4,5 +4,9 @@
 */
 export enum EventTypes {
     /** Emit after user had signIn successfully. @param<LoginResponse> */
-    USERSIGNIN="UserSignIn"
+    USERSIGNIN = "UserSignIn",
+    /** Emit once user signIn or token is refreshed.*/
+    IDLETIMEOUTCHANGED = "IdleTimeoutChanged",
+    /** Emit once the current user signout  */
+    USERSIGNOUT="UserSignOut"
 }

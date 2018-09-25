@@ -5,7 +5,7 @@ import { UserComponent } from './user.component';
 const routes: Routes = [
   {
     "path": '', // empty route loads the component by default
-    "component": UserComponent    
+    "component": UserComponent
   }
 ];
 

@@ -51,6 +51,10 @@
     line-height: 30px !important;
 }
 
+.m-header {
+    z-index: 999 !important;
+}
+
 /**********************************    END Theme Overrides   **************************/
 
 /**********************************  Extra Theme classes   ***************************/
@@ -171,6 +175,11 @@
 }
 
 /*******************************  End Mat-Table   ***************************/
+
+.login-overlay {
+    background-color: #465568 !important;
+    opacity: 1 !important;
+}
 
 /********************* UTILITIES   *****************************************/
 

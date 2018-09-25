@@ -28,7 +28,9 @@ export class HeaderNavComponent implements OnInit, AfterViewInit {
         }
         this.loginSubscription = this.broadcaster.on<CurrentUser>(EventTypes.USERSIGNIN).subscribe(data => {
             /*    this.setCurrentUser(data); */
+            if(data){
             console.log(data);
+            }
         })
     }
 

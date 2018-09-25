@@ -3,7 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 let  BlockUIDemo:any;
 
 @Component({
-    selector: "app-inner-page-wrapper",
+    selector: ".m-grid__item.m-grid__item--fluid.m-grid.m-grid--ver-desktop.m-grid--desktop.m-body",
     templateUrl: "./default.component.html",
     encapsulation: ViewEncapsulation.None,
 })

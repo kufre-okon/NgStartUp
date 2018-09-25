@@ -93,15 +93,12 @@ export class AuthComponent implements OnInit {
         this.fs.markFormGroupTouched(this.signInForm);
 
         if (this.signInForm.valid) {
-
             this.loading = true;
             this._authService.login(this.signInForm.get('username').value, this.signInForm.get('password').value).subscribe(
                 data => {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    this._authService.setUser(JSON.stringify(data));
-                    this._authService.setToken(data.token);
+                    this._authService.handleSignIn(data);
                     this._router.navigate([this.returnUrl]);
-
                     this._broadcaster.broadcast(EventTypes.USERSIGNIN, data);
                 },
                 error => {
@@ -190,6 +187,7 @@ export class AuthComponent implements OnInit {
         mUtil.addClass(login, 'm-login--forget-password');
         mUtil.animateClass(login.getElementsByClassName('m-login__forget-password')[0], 'flipInX animated');
     }
+
     /*
        handleSignUpFormSubmit() {
            $('#m_login_signup_submit').click((e) => {

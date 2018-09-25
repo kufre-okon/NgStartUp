@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { AuthenticationService } from '../../../services/auth/authentication.service';
+import { of } from 'rxjs';
 
 
 @Injectable()
@@ -21,21 +22,28 @@ export class HttpServiceInterceptor implements HttpInterceptor {
             setHeaders: {
                 'Authorization': 'Bearer ' + this.auth.getToken(),
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Ignore-401',
+                'Access-Control-Expose-Headers': 'Ignore-401'
             }
         });
         // handle the response and check for errors or response status
         return next.handle(authReq).map((event: HttpEvent<any>) => {
             return event;
         }).catch((err: any) => {
+            const ignore401 = authReq.headers.has('Ignore-401') && authReq.headers.get('Ignore-401') === 'true';
             if (err instanceof HttpErrorResponse) {
-                if (err.status === 401) {
-                    // redirect to the login route
-                    const location = this.document.location;
-                     location.href = `${location.protocol}//${location.hostname}:${location.port}/login`;
-                    // or show a modal
-                } else {
-                    return Observable.throwError(err.message);
+                if (ignore401)
+                    return Observable.throwError(err);
+                else {
+                    if (err.status === 401) {
+                        // redirect to the login route
+                        const location = this.document.location;
+                        location.href = `${location.protocol}//${location.hostname}:${location.port}/login`;
+                        // or show a modal
+                    } else {
+                        return Observable.throwError(err.message);
+                    }
                 }
             }
         });

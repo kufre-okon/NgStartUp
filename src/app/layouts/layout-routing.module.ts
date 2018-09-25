@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuardService } from '../shared/_guards/auth-guard.service';
 import { LayoutComponent } from './layout.component';
 import { DefaultComponent } from './pages/default.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
     {
         "path": "",
         "component": LayoutComponent,
         "canActivate": [AuthGuardService],
+        "canLoad": [AuthGuardService],
         "children": [
             {
                 "path": "",
@@ -21,6 +23,10 @@ const routes: Routes = [
                     {
                         "path": "user",
                         "loadChildren": "./pages/user/user.module#UserModule"
+                    },
+                    {
+                        "path": "profile",
+                        "loadChildren": "./pages/profile/profile.module#ProfileModule"
                     },
                     //...
                     {

@@ -18,10 +18,13 @@ import { SharedModule } from './shared/_modules/shared.module';
 import { TrillLoaderDirective } from './shared/_directives/trill-loader.directive';
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { PopuploginModule } from './shared/_components/popuplogin/popuplogin.module';
+import { IsSameDirective } from './shared/_directives/is-same.directive';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        IsSameDirective
     ],
     imports: [
         SharedModule,
@@ -32,6 +35,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
         AppRoutingModule,
         LayoutRoutingModule,
         AuthModule,
+        PopuploginModule,
         ToastrModule.forRoot({
             timeOut: 5000,
             positionClass: 'toast-top-center',

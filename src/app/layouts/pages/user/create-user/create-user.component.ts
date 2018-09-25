@@ -72,7 +72,7 @@ export class CreateUserComponent implements OnInit {
           isTemporaryPassword: data.isTemporaryPassword
         });
         let ctrls = (<FormGroup>this.userForm.get('roles')).controls;
-        data.roles.forEach(r => ctrls[r.id].setValue(true));
+        data.roles.forEach(r => ctrls[r.id] && ctrls[r.id].setValue(true));
       }, err => {
         this.errorMsg = err.error || err;
       });

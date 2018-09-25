@@ -27,23 +27,7 @@ export class FormService {
     const messages = {
       required: 'This field is required',
       email: 'This email address is invalid',
-      invalid_characters: (matches: any[]) => {
-
-        let matchedCharacters = matches;
-
-        matchedCharacters = matchedCharacters.reduce((characterString, character, index) => {
-          let string = characterString;
-          string += character;
-
-          if (matchedCharacters.length !== index + 1) {
-            string += ', ';
-          }
-
-          return string;
-        }, '');
-
-        return `These characters are not allowed: ${matchedCharacters}`;
-      },
+      equal:'This field must be equal'
     };
 
     return messages;
@@ -65,7 +49,7 @@ export class FormService {
         if (control && !control.valid) {
           if (!checkDirty || (control.dirty || control.touched)) {
             for (const key in control.errors) {
-              if (key && key !== 'invalid_characters') {
+              if (key && key !== 'equal') {
                 formErrors[field] = formErrors[field] || messages[key];
               } else {
                 formErrors[field] = formErrors[field] || messages[key](control.errors[key]);

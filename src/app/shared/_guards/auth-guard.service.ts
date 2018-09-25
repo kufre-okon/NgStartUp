@@ -22,16 +22,18 @@ export class AuthGuardService implements CanActivate, CanActivateChild, CanLoad 
     const url = `/${route.path}`;
     return this.checkLogin(url);
   }
+
   canActivateChild(childRoute: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean |
     Observable<boolean> | Promise<boolean> {
     return this.canActivate(childRoute, state);
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.isAuthenticated()) { return true; }
+    if (this.authService.isAuthenticated()) {
+      return true;
+    }
     this.authService.redirectUrl = url;
-    console.log(this.authService.redirectUrl);
-    this.router.navigate(['/login'], { queryParams: { returnUrl: url } });
+    this.router.navigate(['/login'], { queryParams: { 'returnUrl': url } });
     return false;
   }
 
