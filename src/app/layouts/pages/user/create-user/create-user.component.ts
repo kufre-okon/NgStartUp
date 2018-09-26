@@ -2,7 +2,6 @@ import { Component, OnInit, Inject, Input } from '@angular/core';
 import { UserModel } from '../../../../models/users/user';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { UserService } from '../../../../services/user/user.service';
-import { FormService } from '../../../../utilities/form.service';
 import { DISABLED } from '@angular/forms/src/model';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { map, finalize } from 'rxjs/operators';
@@ -10,6 +9,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { RoleService } from '../../../../services/role/role.service';
 import { RoleLightWeight } from '../../../../models/role/role-light-weight';
 import { ToastrService } from 'ngx-toastr';
+import { Patterns } from '../../../../_config/patterns';
 
 @Component({
   selector: 'app-create-user',
@@ -20,7 +20,6 @@ export class CreateUserComponent implements OnInit {
   @Input() userId: string;
 
   userForm: FormGroup;
-  formErrors: any;
 
   loading = false;
   saving = false;
@@ -29,7 +28,7 @@ export class CreateUserComponent implements OnInit {
   roles = Array<RoleLightWeight>();
 
   constructor(private _usrv: UserService, private _roleSrv: RoleService,
-    private fb: FormBuilder, private fsrv: FormService,
+    private fb: FormBuilder,
     private toastr: ToastrService,
     public activeModal: NgbActiveModal) {
 
@@ -87,7 +86,7 @@ export class CreateUserComponent implements OnInit {
       firstName: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       phoneNumber: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.pattern(Patterns.emailPattern)]),
       password: new FormControl('', [Validators.required]),
       sendActivationEmail: new FormControl(false),
       lockoutEnabled: new FormControl(false),
@@ -95,26 +94,14 @@ export class CreateUserComponent implements OnInit {
       isTemporaryPassword: new FormControl(true),
       roles: new FormGroup({})
     }, { updateOn: 'submit' });
-    this.formErrors = {
-      username: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      email: ''
-    }
-    // on each value change we call the validateForm function
-    // We only validate form controls that are dirty, meaning they are touched
-    // the result is passed to the formErrors object
-    this.userForm.valueChanges.subscribe((data) => {
-      this.formErrors = this.fsrv.validateForm(this.userForm, this.formErrors, true)
-    });
   }
+
+  // convenient way of getting form controls
+  get f() { return this.userForm.controls; }
 
   save() {
     this.errorMsg = null;
-    // mark all fields as touched
-    this.fsrv.markFormGroupTouched(this.userForm);
+
     if (this.userForm.valid) {
       this.saving = true;
       let selectedRoles = [];

@@ -19,12 +19,10 @@ import { TrillLoaderDirective } from './shared/_directives/trill-loader.directiv
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { PopuploginModule } from './shared/_components/popuplogin/popuplogin.module';
-import { IsSameDirective } from './shared/_directives/is-same.directive';
 
 @NgModule({
     declarations: [
         AppComponent,
-        IsSameDirective
     ],
     imports: [
         SharedModule,

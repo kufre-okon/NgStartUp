@@ -11,18 +11,19 @@
 					</div>
 					<div class="m-login__signin">
 						<form (ngSubmit)="signin()" [formGroup]="signInForm" class="m-login__form m-form" action="">
-							<ng-template #alertSignin></ng-template>
-							<mat-form-field>
-								<input matInput placeholder="Username or Email" formControlName="username" required>
-								<mat-error align="start" *ngIf="signInFormErrors.username" class="form__error">{{ signInFormErrors.username }}</mat-error>
-							</mat-form-field>
+							<ngb-alert type="danger" *ngIf="signInMsg" (close)="signInMsg=null">{{ signInMsg }}</ngb-alert>
 
 							<mat-form-field>
-								<input matInput autocomplete="false" placeholder="Password" [type]="revealPassword ? 'text' : 'password'" formControlName="password" required>
+								<input matInput placeholder="Username or Email" formControlName="username" required>
+								<mat-error align="start" *ngIf="f.username.hasError('required')" class="form__error">Username is required</mat-error>
+							</mat-form-field>
+							<mat-form-field>
+								<input matInput autocomplete="false" placeholder="Password" [type]="revealPassword ? 'text' : 'password'" formControlName="password"
+								 required>
 								<mat-icon matSuffix (click)="revealPassword = !revealPassword">
 									<i class="fa" [ngClass]="{'fa-eye-slash':revealPassword, 'fa-eye':!revealPassword}"></i>
 								</mat-icon>
-								<mat-error align="start" *ngIf="signInFormErrors.password" class="form__error">{{ signInFormErrors.password }}</mat-error>
+								<mat-error align="start" *ngIf="f.password.hasError('required')" class="form__error">Password is required</mat-error>
 							</mat-form-field>
 							<div class="row m-login__form-sub">
 								<div class="col m--align-left">

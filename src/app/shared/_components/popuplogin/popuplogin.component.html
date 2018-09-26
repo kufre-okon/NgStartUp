@@ -18,7 +18,7 @@
 						<mat-icon matSuffix (click)="revealPassword = !revealPassword">
 							<i class="fa" [ngClass]="{'fa-eye-slash':revealPassword, 'fa-eye':!revealPassword}"></i>
 						</mat-icon>
-						<mat-error align="start" *ngIf="signInFormErrors.password" class="form__error">{{ signInFormErrors.password }}</mat-error>
+						<mat-error align="start" *ngIf="f.password.hasError('required')" class="form__error">Password is required</mat-error>
 					</mat-form-field>
 				</div>
 				<div class="m-login__form-action">

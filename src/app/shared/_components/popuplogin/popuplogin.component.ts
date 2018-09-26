@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FormService } from '../../../utilities/form.service';
 import { AuthenticationService } from '../../../services/auth/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -46,7 +45,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class PopupLoginComponent implements OnInit {
 
   signInForm: FormGroup;
-  signInFormErrors: any;
 
   loading = false;
   revealPassword = false;
@@ -57,7 +55,6 @@ export class PopupLoginComponent implements OnInit {
   fullname = "";
 
   constructor(private _authService: AuthenticationService, private fb: FormBuilder,
-    private fs: FormService,
     public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
@@ -71,18 +68,11 @@ export class PopupLoginComponent implements OnInit {
     this.signInForm = this.fb.group({
       password: new FormControl('', [Validators.required]),
     }, { updateOn: 'submit' });
-    this.signInFormErrors = {
-      password: ''
-    }
-    this.signInForm.valueChanges.subscribe((data) => {
-      this.signInFormErrors = this.fs.validateForm(this.signInForm, this.signInFormErrors, true)
-    });
   }
 
+  get f() { return this.signInForm.controls; }
 
   signin() {
-    this.fs.markFormGroupTouched(this.signInForm);
-
     if (this.signInForm.valid) {
 
       this.loading = true;
@@ -96,10 +86,7 @@ export class PopupLoginComponent implements OnInit {
           err => {
             this.errorMsg = err.error || err;
           });
-    } else {
-      this.signInFormErrors = this.fs.validateForm(this.signInForm, this.signInFormErrors, true);
     }
   }
-
 
 }

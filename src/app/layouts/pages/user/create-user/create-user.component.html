@@ -19,28 +19,29 @@
           <div class="col-sm-9">
             <mat-form-field>
               <input matInput placeholder="Enter First Name" formControlName="firstName" required>
-              <mat-error align="start" *ngIf="formErrors.firstName" class="form__error">{{formErrors.firstName }}</mat-error>
+              <mat-error align="start" *ngIf="f.firstName.hasError('required')" class="form__error">First Name is required</mat-error>
             </mat-form-field>
 
             <mat-form-field>
               <input matInput placeholder="Enter Last Name" formControlName="lastName" required>
-              <mat-error align="start" *ngIf="formErrors.lastName" class="form__error">{{formErrors.lastName }}</mat-error>
+              <mat-error align="start" *ngIf="f.lastName.hasError('required')" class="form__error">Last Name is required</mat-error>
             </mat-form-field>
           </div>
         </div>
         <mat-form-field>
           <input matInput autocomplete="off" placeholder="Enter User Name" formControlName="username" required>
-          <mat-error align="start" *ngIf="formErrors.username" class="form__error">{{formErrors.username }}</mat-error>
+          <mat-error align="start" *ngIf="f.username.hasError('required')" class="form__error">Username is required</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput autocomplete="off" placeholder="Enter Email" formControlName="email" required>
-          <mat-error align="start" *ngIf="formErrors.email" class="form__error">{{formErrors.email }}</mat-error>
+          <mat-error align="start" *ngIf="f.email.hasError('required')" class="form__error">Email is required</mat-error>
+          <mat-error align="start" *ngIf="f.email.hasError('pattern')" class="form__error">Email is not valid</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput placeholder="Enter Phone Number" formControlName="phoneNumber" required>
-          <mat-error align="start" *ngIf="formErrors.phoneNumber" class="form__error">{{formErrors.phoneNumber }}</mat-error>
+          <mat-error align="start" *ngIf="f.phoneNumber.hasError('required')" class="form__error">Phone Number is required</mat-error>
         </mat-form-field>
 
         <mat-form-field *ngIf="!userId">
@@ -49,7 +50,7 @@
           <mat-icon matSuffix (click)="revealPassword = !revealPassword">
             <i class="fa" [ngClass]="{'fa-eye-slash':revealPassword, 'fa-eye':!revealPassword}"></i>
           </mat-icon>
-          <mat-error align="start" *ngIf="formErrors.password" class="form__error">{{formErrors.password }}</mat-error>
+          <mat-error align="start" *ngIf="f.password.hasError('required')" class="form__error">Password is required</mat-error>
         </mat-form-field>
         <div *ngIf="!userId" class="m-checkbox-list">
           <mat-checkbox color="primary" formControlName="isTemporaryPassword">Should change password on next login.</mat-checkbox>
@@ -67,9 +68,9 @@
       <mat-tab label="Roles">
         <ng-container *ngIf="roles.length">
           <div formGroupName="roles">
-          <div class="m-checkbox-list" *ngFor="let role of roles">
-            <mat-checkbox color="primary" [formControlName]="role.id"> {{role.name}}</mat-checkbox>
-          </div>
+            <div class="m-checkbox-list" *ngFor="let role of roles">
+              <mat-checkbox color="primary" [formControlName]="role.id"> {{role.name}}</mat-checkbox>
+            </div>
           </div>
         </ng-container>
       </mat-tab>

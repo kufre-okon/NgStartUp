@@ -42,27 +42,27 @@
 
                   <mat-form-field>
                     <input matInput placeholder="First Name" formControlName="firstName" required>
-                    <mat-error align="start" *ngIf="infoFormErrors.firstName" class="form__error">{{infoFormErrors.firstName }}</mat-error>
+                    <mat-error align="start" *ngIf="infoF.firstName.hasError('required')" class="form__error">First Name is required</mat-error>
                   </mat-form-field>
 
                   <mat-form-field>
                     <input matInput placeholder="Last Name" formControlName="lastName" required>
-                    <mat-error align="start" *ngIf="infoFormErrors.lastName" class="form__error">{{infoFormErrors.lastName }}</mat-error>
+                    <mat-error align="start" *ngIf="infoF.lastName.hasError('required')" class="form__error">Last Name is required</mat-error>
                   </mat-form-field>
 
                   <mat-form-field>
                     <input matInput autocomplete="off" placeholder="User Name" formControlName="username" required>
-                    <mat-error align="start" *ngIf="infoFormErrors.username" class="form__error">{{infoFormErrors.username }}</mat-error>
+                    <mat-error align="start" *ngIf="infoF.username.hasError('required')" class="form__error">Username is required</mat-error>
                   </mat-form-field>
 
                   <mat-form-field>
                     <input matInput autocomplete="off" placeholder="Email" formControlName="email" required>
-                    <mat-error align="start" *ngIf="infoFormErrors.email" class="form__error">{{infoFormErrors.email }}</mat-error>
+                    <mat-error align="start" *ngIf="infoF.email.hasError('required')" class="form__error">Email is required</mat-error>
+                    <mat-error align="start" *ngIf="infoF.email.hasError('pattern')" class="form__error">Email address is not valid</mat-error>
                   </mat-form-field>
-
                   <mat-form-field>
                     <input matInput placeholder="Phone Number" formControlName="phoneNumber" required>
-                    <mat-error align="start" *ngIf="infoFormErrors.phoneNumber" class="form__error">{{infoFormErrors.phoneNumber }}</mat-error>
+                    <mat-error align="start" *ngIf="infoF.phoneNumber.hasError('required')" class="form__error">Phone Number is required</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="m-form__actions">
@@ -99,26 +99,27 @@
               Change Password
             </ng-template>
             <div class="p-2">
-              <form class="m-form" (ngSubmit)="save()" [formGroup]="pwdForm" novalidate="">
+              <form class="m-form" (ngSubmit)="changePassword()" [formGroup]="pwdForm" novalidate="">
+                <ng-container trillLoader [loading]="savingPwd" [showMessage]="true"></ng-container>
                 <div class="col-12">
-                  <ng-container trillLoader [loading]="savingPwd" [showMessage]="true"></ng-container>
                   <ngb-alert type="danger" *ngIf="pwdErrorMsg" (close)="pwdErrorMsg=null">{{ pwdErrorMsg }}</ngb-alert>
 
                   <mat-form-field>
                     <input matInput autocomplete="off" placeholder="Current Password" type="password" formControlName="currentPassword" required>
-                    <mat-error align="start" *ngIf="pwdFormErrors.currentPassword" class="form__error">{{pwdFormErrors.currentPassword }}</mat-error>
+                    <mat-error align="start" *ngIf="pwdF.currentPassword.hasError('required')" class="form__error">Current Password is required</mat-error>
                   </mat-form-field>
 
                   <mat-form-field>
-                    <input matInput autocomplete="off" placeholder="New Password" is-equal="confirmPassword" reverse="true" type="password" formControlName="newPassword"
+                    <input matInput autocomplete="off" placeholder="New Password" type="password" formControlName="newPassword"
                       required>
-                    <mat-error align="start" *ngIf="pwdFormErrors.newPassword" class="form__error">{{pwdFormErrors.newPassword }}</mat-error>
+                    <mat-error align="start" *ngIf="pwdF.newPassword.hasError('required')" class="form__error">New Password is required</mat-error>
+                    <mat-error align="start" *ngIf="pwdF.newPassword.hasError('matchFields')" class="form__error">New Password must match</mat-error>
                   </mat-form-field>
 
                   <mat-form-field>
-                    <input matInput autocomplete="off" placeholder="Re-type New Password" is-equal="newPassword" type="password" formControlName="confirmPassword"
+                    <input matInput autocomplete="off" placeholder="Re-type New Password" isEqual="newPassword" type="password" formControlName="confirmPassword"
                       required>
-                    <mat-error align="start" *ngIf="pwdFormErrors.confirmPassword" class="form__error">{{pwdFormErrors.confirmPassword }}</mat-error>
+                    <mat-error align="start" *ngIf="pwdF.confirmPassword.hasError('matchFields')" class="form__error">Confirm Password must match</mat-error>
                   </mat-form-field>
                 </div>
                 <div class="m-form__actions">
@@ -127,7 +128,7 @@
                     <div class="col-7">
                       <button mat-raised-button matTooltip="Cancel changes" type="button">Cancel</button>
                       &nbsp;&nbsp;
-                      <button [disabled]="infoLoading" mat-raised-button color="primary" matTooltip="Save changes" type="submit">Save</button>
+                      <button mat-raised-button color="primary" matTooltip="Save changes" type="submit">Save</button>
                     </div>
                   </div>
                 </div>

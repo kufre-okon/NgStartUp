@@ -6,7 +6,6 @@ import { TrillLoaderDirective } from '../_directives/trill-loader.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModalModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'ngx-moment';
-import { IsSameDirective } from '../_directives/is-same.directive';
 
 @NgModule({
   imports: [

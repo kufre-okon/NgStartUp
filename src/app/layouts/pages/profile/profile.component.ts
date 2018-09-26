@@ -3,7 +3,8 @@ import { AuthenticationService } from '../../../services/auth/authentication.ser
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../../../services/user/user.service';
-import { FormService } from '../../../utilities/form.service';
+import { Patterns } from '../../../_config/patterns';
+import { CustomValidators } from '../../../utilities/custom-validators';
 
 @Component({
   selector: 'app-profile',
@@ -30,20 +31,17 @@ import { FormService } from '../../../utilities/form.service';
 })
 export class ProfileComponent implements OnInit {
   infoForm: FormGroup;
-  infoFormErrors: any;
   infoLoading = false;
   savingInfo = false;
   infoErrorMsg = null;
-  
+
   pwdForm: FormGroup;
-  pwdFormErrors: any;
   savingPwd = false;
   pwdErrorMsg = null;
 
   constructor(private authSrv: AuthenticationService,
     private _usrv: UserService,
     private fb: FormBuilder,
-    private fsrv: FormService,
     private toastr: ToastrService) {
     this.buildInfoForm();
     this.buildPwdForm();
@@ -56,43 +54,39 @@ export class ProfileComponent implements OnInit {
 
   buildInfoForm() {
     this.infoForm = this.fb.group({
-      userID: new FormControl({ value: null, disabled: true }),
-      dateCreated: new FormControl({ value: null, disabled: true }),
-      lastLoginDate: new FormControl({ value: null, disabled: true }),
-      username: new FormControl('', [Validators.required]),
-      firstName: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required, Validators.maxLength(20)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      lockoutEnabled: new FormControl({ value: null, disabled: true }),
-      isActive: new FormControl({ value: null, disabled: true }),
-      isTemporaryPassword: new FormControl({ value: null, disabled: true }),
+      userID: [{ value: null, disabled: true }],
+      dateCreated: [{ value: null, disabled: true }],
+      lastLoginDate: [{ value: null, disabled: true }],
+      username: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      phoneNumber: ['', [Validators.required, Validators.maxLength(20)]],
+      email: ['', [Validators.required, Validators.pattern(Patterns.emailPattern)]],
+      lockoutEnabled: [{ value: null, disabled: true }],
+      isActive: [{ value: null, disabled: true }],
+      isTemporaryPassword: [{ value: null, disabled: true }]
     }, { updateOn: 'submit' });
-    this.infoFormErrors = {
-      username: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      email: ''
-    }  
-    this.infoForm.valueChanges.subscribe((data) => {
-      this.infoFormErrors = this.fsrv.validateForm(this.infoForm, this.infoFormErrors, true)
-    });
   }
 
   buildPwdForm() {
-    this.pwdForm = this.fb.group({     
-      currentPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required])      
-    }, { updateOn: 'submit' });
-    this.pwdFormErrors = {
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: ''
-    }  
-    this.pwdForm.valueChanges.subscribe((data) => {
-      this.pwdFormErrors = this.fsrv.validateForm(this.pwdForm, this.pwdFormErrors, true)
-    });
+    this.pwdForm = this.fb.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+      confirmPassword: ['', Validators.required]
+    }, {
+        updateOn: 'submit',
+        validator: CustomValidators.Match('newPassword', 'confirmPassword')
+      });
+  }
+  get pwdF() {
+    return this.pwdForm.controls;
+  }
+  get infoF() {
+    return this.infoForm.controls;
+  }
+
+  changePassword() {
+    if (!this.pwdForm.valid) return;
+    console.log(this.pwdForm.getRawValue());
   }
 }

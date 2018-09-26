@@ -2,13 +2,10 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { ActivatedRoute, Router } from '@angular/router';
 import { ScriptLoaderService } from '../shared/_services/script-loader.service';
 import { Helpers } from '../helpers';
-import { AlertService } from '../shared/_services/alert.service';
-import { AlertComponent } from '../shared/_components/alert/alert.component';
 import { UserService } from '../services/user/user.service';
 import { UserModel } from '../models/users/user';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from '../services/auth/authentication.service';
-import { FormService } from '../utilities/form.service';
 import { BroadcasterService } from '../shared/_services/event/broadcaster.service';
 import { EventTypes } from '../shared/_services/event/event-types.enum';
 
@@ -23,8 +20,8 @@ declare let mUtil: any;
 
 export class AuthComponent implements OnInit {
 
+    signInMsg: string;
     signInForm: FormGroup;
-    signInFormErrors: any;
 
     signUpForm: FormGroup;
     forgetPaswordForm: FormGroup;
@@ -33,22 +30,13 @@ export class AuthComponent implements OnInit {
     revealPassword = false;
     returnUrl: string;
 
-    @ViewChild('alertSignin',
-        { read: ViewContainerRef }) alertSignin: ViewContainerRef;
-    @ViewChild('alertSignup',
-        { read: ViewContainerRef }) alertSignup: ViewContainerRef;
-    @ViewChild('alertForgotPass',
-        { read: ViewContainerRef }) alertForgotPass: ViewContainerRef;
-
     constructor(
         private _router: Router,
         private _script: ScriptLoaderService,
         private _userService: UserService,
         private _route: ActivatedRoute,
         private _authService: AuthenticationService,
-        private _alertService: AlertService,
         private fb: FormBuilder,
-        private fs: FormService,
         private _broadcaster: BroadcasterService,
         private cfr: ComponentFactoryResolver) {
     }
@@ -69,29 +57,19 @@ export class AuthComponent implements OnInit {
             });
     }
 
+    get f() { return this.signInForm.controls; }
+    
     buildSignInForm() {
         this.signInForm = this.fb.group({
             username: new FormControl('', [Validators.required]),
             password: new FormControl('', [Validators.required]),
             remember: new FormControl({ value: true })
         }, { updateOn: 'submit' });
-        this.signInFormErrors = {
-            username: '',
-            password: ''
-        }
-        // on each value change we call the validateForm function
-        // We only validate form controls that are dirty, meaning they are touched
-        // the result is passed to the signInFormErrors object
-        this.signInForm.valueChanges.subscribe((data) => {
-            this.signInFormErrors = this.fs.validateForm(this.signInForm, this.signInFormErrors, true)
-        });
     }
 
 
     signin() {
-        // mark all fields as touched
-        this.fs.markFormGroupTouched(this.signInForm);
-
+        this.signInMsg = null;
         if (this.signInForm.valid) {
             this.loading = true;
             this._authService.login(this.signInForm.get('username').value, this.signInForm.get('password').value).subscribe(
@@ -102,12 +80,9 @@ export class AuthComponent implements OnInit {
                     this._broadcaster.broadcast(EventTypes.USERSIGNIN, data);
                 },
                 error => {
-                    this.showAlert('alertSignin');
-                    this._alertService.error(error);
+                    this.signInMsg = error;
                     this.loading = false;
                 });
-        } else {
-            this.signInFormErrors = this.fs.validateForm(this.signInForm, this.signInFormErrors, true);
         }
     }
 
@@ -148,13 +123,6 @@ export class AuthComponent implements OnInit {
                  this.loading = false;
              });
       */
-    }
-
-    showAlert(target) {
-        this[target].clear();
-        let factory = this.cfr.resolveComponentFactory(AlertComponent);
-        let ref = this[target].createComponent(factory);
-        ref.changeDetectorRef.detectChanges();
     }
 
     displaySignUpForm() {
