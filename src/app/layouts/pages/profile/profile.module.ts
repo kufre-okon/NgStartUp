@@ -8,11 +8,13 @@ import { UserService } from '../../../services/user/user.service';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { ProfileComponent } from './profile.component';
 import { RouterModule, Routes } from '@angular/router';
+import { ProfileResolver } from './profile-resolver';
+import { ngfModule, ngf } from "angular-file";
 
 const routes: Routes = [
   {
     'path': '',
-    'component': ProfileComponent
+    'component': ProfileComponent, resolve: { user: ProfileResolver }
   }
 ];
 
@@ -23,13 +25,15 @@ const routes: Routes = [
     SharedModule,
     AppMaterialModule,
     ReactiveFormsModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    ngfModule
   ],
   declarations: [
     ProfileComponent
   ],
   providers: [
-    UserService
+    UserService,
+    ProfileResolver
   ], exports: [
     RouterModule,
   ]

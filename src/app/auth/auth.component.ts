@@ -58,7 +58,7 @@ export class AuthComponent implements OnInit {
     }
 
     get f() { return this.signInForm.controls; }
-    
+
     buildSignInForm() {
         this.signInForm = this.fb.group({
             username: new FormControl('', [Validators.required]),

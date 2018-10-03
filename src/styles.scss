@@ -59,6 +59,10 @@
 
 /**********************************  Extra Theme classes   ***************************/
 
+.m-topbar .m-topbar__nav.m-nav>.m-nav__item>.m-nav__link .m-topbar__userpic img {
+    max-height: 40px !important;
+}
+
 .m-portlet {
     .m-portlet__body {
         .m-portlet__body-progress {
@@ -88,6 +92,26 @@
             flex-grow: 1;
         }
     }
+}
+
+.label {
+    text-shadow: none !important;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 3px 6px;
+    color: #fff;
+    &.label-danger {
+        background-color: #ed6b75;
+    }
+}
+
+img {
+    vertical-align: middle;
+}
+
+.img-responsive {
+    display: block;
+    height: auto;
 }
 
 /**********************************  End Extra Theme classes   ***************************/
@@ -142,6 +166,26 @@
 
 .clickable-item {
     cursor: pointer;
+}
+
+.thumbnail {
+    padding: 4px;
+    line-height: 1.42857;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.thumbnail a img,
+.thumbnail img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /******************************* Begin NG-SELECT  ********************************/
@@ -375,8 +419,12 @@
     padding-top: 8px;
 }
 
-.p-t-m {
+.p-t-md {
     padding-top: 10px;
+}
+
+.p-t-lg {
+    padding-top: 15px;
 }
 
 .p-b-xxs {

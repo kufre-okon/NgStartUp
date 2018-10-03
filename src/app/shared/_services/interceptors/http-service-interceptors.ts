@@ -18,15 +18,22 @@ export class HttpServiceInterceptor implements HttpInterceptor {
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // clone the request and replace the original headers with cloned headers
-        const authReq = req.clone({
+        const ignoreContentType = req.headers.has('ignore-content-type');
+        let authReq = req.clone({
             setHeaders: {
                 'Authorization': 'Bearer ' + this.auth.getToken(),
-                'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Ignore-401',
-                'Access-Control-Expose-Headers': 'Ignore-401'
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Ignore-401,ignore-content-type',
+                'Access-Control-Expose-Headers': 'Ignore-401,ignore-content-type'
             }
         });
+        if (!ignoreContentType)
+            authReq = authReq.clone({
+                setHeaders: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
         // handle the response and check for errors or response status
         return next.handle(authReq).map((event: HttpEvent<any>) => {
             return event;

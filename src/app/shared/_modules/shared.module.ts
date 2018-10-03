@@ -6,6 +6,7 @@ import { TrillLoaderDirective } from '../_directives/trill-loader.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModalModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'ngx-moment';
+import { ImgPreviewDirective } from '../_directives/img-preview.directive';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { MomentModule } from 'ngx-moment';
     MomentModule
   ],
   declarations: [
-    TrillLoaderDirective
+    TrillLoaderDirective,
+    ImgPreviewDirective,
   ],
   providers: [
     // PERFECT_SCROLLBAR_CONFIG        
@@ -25,6 +27,7 @@ import { MomentModule } from 'ngx-moment';
     NgbModalModule, // using NgbModal instead of Mat-Dialog because of responsiveness issues currently with mat-dialog
     PerfectScrollbarModule,
     TrillLoaderDirective,
+    ImgPreviewDirective,
     NgSelectModule,
     NgbAlertModule,
     MomentModule

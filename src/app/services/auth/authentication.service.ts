@@ -117,11 +117,12 @@ export class AuthenticationService extends BaseApiService {
     }
 
     getUser(): CurrentUser {
-        const user = localStorage.getItem('currentUser');
-        if (!user || user === 'undefined')
+        const _user = localStorage.getItem('currentUser');
+        if (!_user || _user === 'undefined')
             return null;
-        else
-            return JSON.parse(user);
+        else {
+            return JSON.parse(_user);
+         }
     }
 
     private getRefreshToken() {

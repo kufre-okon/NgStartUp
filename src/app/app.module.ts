@@ -15,7 +15,6 @@ import { AuthenticationService } from './services/auth/authentication.service';
 import { BroadcasterService } from './shared/_services/event/broadcaster.service';
 import { TrillPaginatorComponent } from './shared/_components/trill-paginator/trill-paginator.component';
 import { SharedModule } from './shared/_modules/shared.module';
-import { TrillLoaderDirective } from './shared/_directives/trill-loader.directive';
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { PopuploginModule } from './shared/_components/popuplogin/popuplogin.module';

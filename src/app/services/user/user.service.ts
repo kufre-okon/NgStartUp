@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { BaseApiService } from '../../shared/_services/base-api.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { UserCount, UserModel } from '../../models/users/user';
@@ -44,5 +44,16 @@ export class UserService extends BaseApiService {
 
   activateDeactivateAccount(userId: string, status: boolean) {
     return this.invoke(this.http.post(`${environment.apiPath}user/${userId}/changeStatus`, { status: status }));
+  }
+
+  changePassword(data: any) {
+    return this.invoke(this.http.post(`${environment.apiPath}user/ChangePassword`, data));
+  }
+
+  uploadProfilePicture(file: File, username: string) {
+    const httpOptions = { headers: new HttpHeaders({ 'ignore-content-type': 'true' }), reportProgress: true };
+    let input = new FormData();
+    input.append('file', file);    
+    return this.http.request(new HttpRequest('POST', `${environment.apiPath}FileUpload/UploadUserProfile/${username}/`, input, httpOptions));
   }
 }

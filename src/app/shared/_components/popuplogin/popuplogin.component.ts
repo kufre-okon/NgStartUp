@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { AuthenticationService } from '../../../services/auth/authentication.service';
 import { finalize } from 'rxjs/operators';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-popuplogin',
@@ -53,15 +54,17 @@ export class PopupLoginComponent implements OnInit {
   title = "Your login session has expired!";
   username = "";
   fullname = "";
+  profilePicture:string;
 
   constructor(private _authService: AuthenticationService, private fb: FormBuilder,
-    public activeModal: NgbActiveModal) { }
+    public activeModal: NgbActiveModal,private router: Router) { }
 
   ngOnInit() {
     this.buildSignInForm();
     let user = this._authService.getUser();
     this.username = user.username;
     this.fullname = user.fullName;
+    this.profilePicture= user.profilePictureUrl + '?v=' + Date.now(); // to force reloading browser cache
   }
 
   buildSignInForm() {
@@ -89,4 +92,8 @@ export class PopupLoginComponent implements OnInit {
     }
   }
 
+  gotoLogin(){
+    this.activeModal.close(false);
+    this.router.navigate(['/login']);
+  }
 }

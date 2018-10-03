@@ -63,12 +63,15 @@ export class AppComponent implements OnInit {
             .subscribe(() => {
                 this.startIdleDector();
                 this.setIdleDectorTimeout();
+                // lets clear this flag in-case the user navigated away to the login page from the popuplogin
+                this.popupLoginOpened = false;
             });
         this.logoutSubscription = this.broadcaster.on<any>(EventTypes.USERSIGNOUT)
             .subscribe(() =>
                 this.idleDector.pause()
             );
     }
+    
     ngOnInit() {
 
         this.subscribeEvents();
