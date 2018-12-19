@@ -1,5 +1,5 @@
 # NgStartUp
-Angular frontend startup app with basic user authentication suitable for kick-starting a new project. It uses angular material design in addition to bootstrap.
+Angular frontend startup app with basic user authentication suitable for kick-starting a new project. It uses metronic theme, angular material design in addition to bootstrap.
 
 The default backend is StartUpApi - build on ASP.NET core 1.1
 
