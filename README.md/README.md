@@ -15,4 +15,4 @@ How To Use
 
 - npm login (this might require you creating a free npm account if you haven't)
 
-- npm install --no-bin-links
+- npm install (if on windows, use --no-bin-links option)
